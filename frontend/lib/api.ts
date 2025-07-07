@@ -1,10 +1,22 @@
-export async function createProject(data) {
-  const res = await fetch("http://localhost:5040/api/projects/create", {
+// Define an interface for the project creation payload for type safety
+interface CreateProjectPayload {
+  project_name?: string;
+  molecule_names?: string;
+  therapeutic_area?: string;
+  key_differentiating_benefits?: string;
+  natural_language_prompt?: string;
+}
+
+export async function createProject(data: CreateProjectPayload) {
+  const res = await fetch("http://localhost:5040/api/projects/create", { // TODO: Use environment variable for API base URL
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(data)
   });
-  if (!res.ok) throw new Error("Failed to create project");
+  if (!res.ok) {
+    const errorData = await res.json().catch(() => ({ message: "Failed to create project. Server response not readable." }));
+    throw new Error(errorData.message || `Failed to create project. Status: ${res.status}`);
+  }
   return await res.json();
 }
 

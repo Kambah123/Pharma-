@@ -17,7 +17,11 @@ export default function ProjectPage() {
   const [leafletContent, setLeafletContent] = useState("");
   const [saving, setSaving] = useState(false);
   const [feedback, setFeedback] = useState("");
-  const [complianceStatus, setComplianceStatus] = useState("");
+  const [complianceStatus, setComplianceStatus] = useState(""); // TODO: Re-evaluate how complianceStatus is fetched and updated with new backend schema
+
+  // TODO: The save/update/export functions below are linked to backend endpoints
+  // that might need updating to align with the new brand_elements schema.
+  // For now, they might not work as expected. This needs to be addressed in a future step.
 
   useEffect(() => {
     if (!id) return;
